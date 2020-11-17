@@ -1,0 +1,50 @@
+#helm:
+#  command: helm
+#  version: 3 # 2 or 3
+#
+#deploy-list:
+#  - name: mme-oambt-helm
+#    values:
+#      - /root/helm/cnf/custom-values/4g-mme.yaml
+#    chart: /root/helm/cnf/4g-mme
+#    namespace: mme-oambt-helm
+#  - name: amf-oambt-helm
+#    values:
+#      - /root/helm/cnf/custom-values/5g-amf.yaml
+#    chart: /root/helm/cnf/5g-amf
+#    namespace: amf-oambt-helm
+#  - name: smf-oambt-helm
+#    values:
+#      - /root/helm/cnf/custom-values/5g-smf.yaml
+#    chart: /root/helm/cnf/5g-smf
+#    namespace: smf-oambt-helm
+#  - name: upf-oambt-helm
+#    values:
+#      - /root/helm/cnf/custom-values/5g-upf.yaml
+#    chart: /root/helm/cnf/5g-upf
+#    namespace: upf-oambt-helm
+helm:
+  command: helm
+  version: 2
+
+deploy-list:
+  - name: mme-sit-helm-test
+    values:
+      - /home/sysadmin/datas/cnf/cnf-chart/4g-mme/values_wrcp.yaml
+    chart: /home/sysadmin/datas/cnf/cnf-chart/4g-mme
+    namespace: mme-sit-helm-test
+  - name: amf-sit-helm-test
+    values:
+      - /home/sysadmin/datas/cnf/cnf-chart/5g-amf/values_wrcp.yaml
+    chart: /home/sysadmin/datas/cnf/cnf-chart/5g-amf
+    namespace: amf-sit-helm-test
+  - name: smf-sit-helm-test
+    values:
+      - /home/sysadmin/datas/cnf/cnf-chart/5g-smf/values_wrcp.yaml
+    chart: /home/sysadmin/datas/cnf/cnf-chart/5g-smf
+    namespace: smf-sit-helm-test
+  - name: upf-sit-helm-test
+    values:
+      - /home/sysadmin/datas/cnf/cnf-chart/5g-upf/values_wrcp.yaml
+    chart: /home/sysadmin/datas/cnf/cnf-chart/5g-upf
+    namespace: upf-sit-helm-test
