@@ -12,12 +12,15 @@ import (
 	"strconv"
 )
 
+var conf *Config
+
+
 type Config struct {
 	HelmInfo   HelmConfig     `yaml:"helm"`
 	DeployInfo []DeployConfig `yaml:"deploy-list"`
 }
 
-func NewConfig(configFilePath string) *Config {
+func NewConfig(configFilePath string) {
 	config := &Config{}
 	var filePath string
 	if configFilePath != "" {
@@ -53,7 +56,7 @@ deploy-list:
 		log.Fatal(err.Error())
 	}
 	utils.CheckError(yaml.Unmarshal(yamlFile, config))
-	return config
+	conf = config
 }
 
 func (c *Config) ApplyCommand(index int) string {
@@ -123,4 +126,15 @@ func (c *Config) isOutOfRangeInDeployInfo(index int) bool {
 	return false
 }
 
+func GetConfig() *Config {
+	return conf
+}
 
+func GetIndexesToCompletion() []string {
+	length := len(conf.DeployInfo)
+	var ret []string
+	for i := 0; i< length; i++ {
+		ret = append(ret, strconv.Itoa(i+1))
+	}
+	return ret
+}

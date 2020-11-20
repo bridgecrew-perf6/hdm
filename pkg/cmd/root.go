@@ -18,12 +18,18 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/apply"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/completion"
 	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/config"
+	hdmdelete "github.sec.samsung.com/m5-kim/hdm/pkg/cmd/delete"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/list"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/status"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/ui"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/version"
 	"os"
 )
 
 var cfgFile string
-var Conf *config.Config
 
 
 // rootCmd represents the base command when called without any subcommands
@@ -34,6 +40,10 @@ var rootCmd = &cobra.Command{
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
+}
+
+func GetRootCmd() *cobra.Command {
+	return rootCmd
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -56,9 +66,16 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	list.CreateListCommand(rootCmd)
+	apply.CreateApplyCommand(rootCmd)
+	hdmdelete.CreateDeleteCommand(rootCmd)
+	status.CreateStatusCommand(rootCmd)
+	ui.CreateUICommand(rootCmd)
+	version.CreateVersionCommand(rootCmd)
+	completion.CreateCompletionCommand(rootCmd)
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	Conf = config.NewConfig(cfgFile)
+	config.NewConfig(cfgFile)
 }
