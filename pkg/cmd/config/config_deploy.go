@@ -4,6 +4,7 @@ import "fmt"
 
 type DeployConfig struct {
 	ReleaseName    string   `yaml:"name"`
+	Alias          []string `yaml:"alias"`
 	ValueFiles     []string `yaml:"values"`
 	ChartDirectory string   `yaml:"chart"`
 	Namespace      string   `yaml:"namespace"`
@@ -12,7 +13,7 @@ type DeployConfig struct {
 func (dc *DeployConfig) applyCommand(hc HelmConfig) string {
 	applyCmd := fmt.Sprintf("%s upgrade --install %s %s --namespace %s", hc.HelmCommand, dc.ReleaseName, dc.ChartDirectory, dc.Namespace)
 	if len(dc.ValueFiles) > 0 {
-		for _, valueFile := range dc.ValueFiles{
+		for _, valueFile := range dc.ValueFiles {
 			applyCmd += fmt.Sprintf(" -f %s", valueFile)
 		}
 	}

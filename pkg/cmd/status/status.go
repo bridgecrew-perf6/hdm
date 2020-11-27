@@ -16,16 +16,16 @@ limitations under the License.
 package status
 
 import (
-	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/config"
-	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/utils"
-	"strconv"
-
 	"github.com/spf13/cobra"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/common"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/config"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/exec"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/utils"
 )
 
 // statusCmd represents the status command
 var statusCmd = &cobra.Command{
-	Use:   "status [INDEX]",
+	Use:   "status [INDEX|ALIAS]",
 	Short: "get all pods in namespace",
 	Long: `get all pods in namespace.
 
@@ -34,15 +34,15 @@ Example:
 `,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		index, err := strconv.Atoi(args[0])
+		index, err := common.ConvertToIndexTarget(args[0])
 		utils.CheckError(err)
-		utils.ExecuteCommand(config.GetConfig().StatusCommand(index))
+		exec.ExecuteCommand(config.GetConfig().StatusCommand(index))
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		if len(args) != 0 {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		return config.GetIndexesToCompletion(), cobra.ShellCompDirectiveNoFileComp
+		return config.GetTargetsToCompletion(), cobra.ShellCompDirectiveNoFileComp
 	},
 }
 

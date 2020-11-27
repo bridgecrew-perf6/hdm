@@ -36,8 +36,9 @@ Example:
 	},
 }
 
-func CreateListCommand(rootCmd *cobra.Command) {
-	rootCmd.AddCommand(listCmd)
+func NewListCmd() *cobra.Command {
+	return listCmd
+	//rootCmd.AddCommand(listCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

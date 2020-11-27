@@ -40,15 +40,27 @@ v1.1
   * zsh  
     * echo "autoload -U compinit; compinit" >> ~/.zshrc
     * hdm completion zsh > "${fpath[1]}/_hdm"
-    * new shell takes effect.`
+    * new shell takes effect.
+
+v1.2
+
+* add alias for deploy targets.
+  * usage
+alias:
+  - amf
+  - amf-test
+* alias validation check when reading config file`
 
 // versionCmd represents the version command
+
+const Version = "v1.2"
+
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "show hdm version",
 	Long: `show helm deploy manager version`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Helm Deploy Manager v1.1 made by m5.kim")
+		fmt.Printf("Helm Deploy Manager %s made by m5.kim\n", Version)
 		fmt.Println(readme)
 	},
 }

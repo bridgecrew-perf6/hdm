@@ -30,7 +30,7 @@ import (
 )
 
 var cfgFile string
-
+var dryRun bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -62,11 +62,11 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.hdm/config.yaml)")
-
+	rootCmd.PersistentFlags().BoolVar(&dryRun, "dry-run", false, "not execute command")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	list.CreateListCommand(rootCmd)
+	rootCmd.AddCommand(list.NewListCmd())
 	apply.CreateApplyCommand(rootCmd)
 	hdmdelete.CreateDeleteCommand(rootCmd)
 	status.CreateStatusCommand(rootCmd)
@@ -78,4 +78,5 @@ func init() {
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	config.NewConfig(cfgFile)
+	//config.GetGlobalOption()
 }

@@ -16,6 +16,7 @@ limitations under the License.
 package completion
 
 import (
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/utils"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -55,9 +56,11 @@ $ hdm completion zsh > "${fpath[1]}/_yourprogram"
 	Run: func(cmd *cobra.Command, args []string) {
 		switch args[0] {
 		case "bash":
-			cmd.Root().GenBashCompletion(os.Stdout)
+			err := cmd.Root().GenBashCompletion(os.Stdout)
+			utils.CheckError(err)
 		case "zsh":
-			cmd.Root().GenZshCompletion(os.Stdout)
+			err := cmd.Root().GenZshCompletion(os.Stdout)
+			utils.CheckError(err)
 		}
 	},
 }

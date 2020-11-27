@@ -16,34 +16,38 @@ limitations under the License.
 package apply
 
 import (
-	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/config"
-	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/utils"
-	"strconv"
-
 	"github.com/spf13/cobra"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/common"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/config"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/exec"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/utils"
 )
 
 // applyCmd represents the apply command
 var applyCmd = &cobra.Command{
-	Use:   "apply [INDEX]",
+	Use:   "apply [INDEX|ALIAS]",
 	Short: "apply (install & upgrade) with helm command",
 	Long: `apply (install & upgrade) with helm command.
 
 Example:
-  hdm apply 1
+  $ hdm apply 1
+
+  or if you want to use alias, change index to alias
+  
+  $ hdm apply amf
 `,
 
-	Args:              cobra.ExactArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		index, err := strconv.Atoi(args[0])
+		index, err := common.ConvertToIndexTarget(args[0])
 		utils.CheckError(err)
-		utils.ExecuteCommand(config.GetConfig().ApplyCommand(index))
+		exec.ExecuteCommand(config.GetConfig().ApplyCommand(index))
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		if len(args) != 0 {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		return config.GetIndexesToCompletion(), cobra.ShellCompDirectiveNoFileComp
+		return config.GetTargetsToCompletion(), cobra.ShellCompDirectiveNoFileComp
 	},
 }
 

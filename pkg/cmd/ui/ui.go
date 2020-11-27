@@ -17,14 +17,15 @@ package ui
 
 import (
 	"github.com/spf13/cobra"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/common"
 	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/config"
+	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/exec"
 	"github.sec.samsung.com/m5-kim/hdm/pkg/cmd/utils"
-	"strconv"
 )
 
 // uiCmd represents the ui command
 var uiCmd = &cobra.Command{
-	Use:   "ui [INDEX]",
+	Use:   "ui [INDEX|ALIAS]",
 	Short: "attach to UI CLI for samsung CNF",
 	Long: `attach to UI CLI for samsung CNF.
 
@@ -33,15 +34,15 @@ Example:
 `,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		index, err := strconv.Atoi(args[0])
+		index, err := common.ConvertToIndexTarget(args[0])
 		utils.CheckError(err)
-		utils.ExecuteCommand(config.GetConfig().UICommand(index))
+		exec.ExecuteCommand(config.GetConfig().UICommand(index))
 	},
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		if len(args) != 0 {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		return config.GetIndexesToCompletion(), cobra.ShellCompDirectiveNoFileComp
+		return config.GetTargetsToCompletion(), cobra.ShellCompDirectiveNoFileComp
 	},
 }
 
