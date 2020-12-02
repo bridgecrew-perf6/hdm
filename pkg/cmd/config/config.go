@@ -105,7 +105,7 @@ func (c *Config) UICommand(index int) string {
 
 func (c *Config) ListAllCommand() {
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Index", "Command", "Execution"})
+	table.SetHeader([]string{"Index (Alias)", "Command", "Execution"})
 	table.SetAutoMergeCells(true)
 	table.SetAutoFormatHeaders(true)
 	table.SetBorder(true)
@@ -131,7 +131,7 @@ func buildIndexAndAlias(index int, aliasList []string) string {
 	aliases := strings.Join(aliasList, ",")
 	var ret string
 	if aliases != "" {
-		ret = fmt.Sprintf("%s(%s)", indexStr, aliases)
+		ret = fmt.Sprintf("%s (%s)", indexStr, aliases)
 	} else {
 		ret = fmt.Sprintf("%s", indexStr)
 	}

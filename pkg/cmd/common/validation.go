@@ -10,7 +10,7 @@ func ConvertToIndexTarget(target string) (int, error) {
 	index, err := strconv.Atoi(target)
 	var ret int
 	if err == nil {
-		ret = index + 1
+		ret = index
 		return ret, nil
 	}
 	conf := config.GetConfig()
